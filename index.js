@@ -5,6 +5,14 @@ const express = require("express");
 
 
 const app = express()
+app.use(express.urlencoded({ extended: false }))
+app.use(express.static("public"))
+app.use((req, res, next) => {
+    log = `${Date.now()}:${req?.url} new request received \n`;
+    fs.appendFile("log.txt", log, (err, data) => {
+        next();
+    })
+})
 
 app.get('/', (req, res) => {
     res.send("hi")
