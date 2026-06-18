@@ -5,7 +5,14 @@ const express = require("express");
 
 
 const app = express()
-
+// app.use(express.urlencoded({ extended: false }))
+// app.use(express.static("public"))
+app.use((req, res, next) => {
+    log = `${Date.now()}:${req?.url} new request received \n`;
+    fs.appendFile("log.txt", log, (err, data) => {
+        next();
+    })
+})
 app.get('/', (req, res) => {
     res.send("hi")
 })
@@ -24,7 +31,13 @@ app.get('/{*path}', (req, res) => {
 app.post("/form", (req, res) => {
     res.end("form submitted")
 })
-app.listen(8000, () => { console.log("start server") })
+app.listen(8000, (err) => {
+    if (err) {
+        console.error("Failed to start server:", err);
+        return;
+    }
+    console.log("start server");
+})
 
 
 const hanndler = (req, res) => {
