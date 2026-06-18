@@ -5,14 +5,6 @@ const express = require("express");
 
 
 const app = express()
-app.use(express.urlencoded({ extended: false }))
-app.use(express.static("public"))
-app.use((req, res, next) => {
-    log = `${Date.now()}:${req?.url} new request received \n`;
-    fs.appendFile("log.txt", log, (err, data) => {
-        next();
-    })
-})
 
 app.get('/', (req, res) => {
     res.send("hi")
@@ -33,6 +25,8 @@ app.post("/form", (req, res) => {
     res.end("form submitted")
 })
 app.listen(8000, () => { console.log("start server") })
+
+
 const hanndler = (req, res) => {
     if (req.url === '/favicon.ico') { res.end() };
     const myUrl = url.parse(req.url, true);
