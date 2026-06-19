@@ -60,7 +60,11 @@ app.get('/users', async (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         const rows = await User.getAll();
-        res.json(rows);
+        res.setHeader("Content-type", "application/json");
+        res.setHeader("X-Host", "Fahad-NodeJs");
+        res.setHeader("love", "mane balupasha");
+        console.log(req.headers)
+        res.end(JSON.stringify(rows));
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Database query failed' });
@@ -86,7 +90,7 @@ app.get('/api/users/:id', async (req, res) => {
 app.post('/api/users', async (req, res) => {
     // Validate request body against our schema
     const validationResult = User.validate(req.body);
-    
+
     if (!validationResult.success) {
         return res.status(400).json({
             error: 'Validation failed',

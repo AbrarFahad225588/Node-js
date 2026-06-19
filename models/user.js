@@ -10,6 +10,8 @@ const UserSchema = z.object({
   user: z.string().max(100).optional().nullable()
 });
 
+
+
 class User {
   // Static validation helper
   static validate(data) {
